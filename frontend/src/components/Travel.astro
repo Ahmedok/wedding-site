@@ -1,0 +1,156 @@
+---
+---
+
+<section class="section section--alt travel" id="travel">
+  <div class="container">
+    <h2 class="section__title">Как добраться</h2>
+    <p class="section__subtitle">Информация для гостей о транспорте и размещении в Алматы</p>
+
+    <div class="travel__grid">
+      <!-- Transport Card -->
+      <div class="card travel__card">
+        <div class="travel__icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="14" width="36" height="20" rx="4" fill="hsl(270, 50%, 95%)" stroke="hsl(270, 50%, 40%)" stroke-width="2" />
+            <circle cx="14" cy="38" r="4" fill="hsl(270, 50%, 40%)" />
+            <circle cx="14" cy="38" r="2" fill="hsl(270, 50%, 95%)" />
+            <circle cx="34" cy="38" r="4" fill="hsl(270, 50%, 40%)" />
+            <circle cx="34" cy="38" r="2" fill="hsl(270, 50%, 95%)" />
+            <rect x="10" y="18" width="12" height="8" rx="1" fill="hsl(270, 50%, 85%)" />
+            <rect x="26" y="18" width="12" height="8" rx="1" fill="hsl(270, 50%, 85%)" />
+            <line x1="6" y1="30" x2="42" y2="30" stroke="hsl(270, 50%, 70%)" stroke-width="1" />
+          </svg>
+        </div>
+        <h3 class="travel__card-title">Транспорт</h3>
+        <ul class="travel__list">
+          <li class="travel__list-item">
+            <span class="travel__list-icon">🚖</span>
+            <div>
+              <strong>Такси</strong>
+              <p>Рекомендуем Яндекс.Такси или InDrive до пр. Аль-Фараби, 216</p>
+            </div>
+          </li>
+          <li class="travel__list-item">
+            <span class="travel__list-icon">🚗</span>
+            <div>
+              <strong>На автомобиле</strong>
+              <p>На территории имеется бесплатная парковка для гостей</p>
+            </div>
+          </li>
+          <li class="travel__list-item">
+            <span class="travel__list-icon">🚌</span>
+            <div>
+              <strong>Общественный транспорт</strong>
+              <p>Автобусные маршруты до остановки «Аль-Фараби»</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Hotels Card -->
+      <div class="card travel__card">
+        <div class="travel__icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="12" width="32" height="30" rx="2" fill="hsl(270, 50%, 95%)" stroke="hsl(270, 50%, 40%)" stroke-width="2" />
+            <rect x="4" y="10" width="40" height="4" rx="1" fill="hsl(270, 50%, 40%)" />
+            <!-- Windows -->
+            <rect x="14" y="18" width="6" height="6" rx="1" fill="hsl(25, 90%, 85%)" stroke="hsl(270, 50%, 70%)" stroke-width="1" />
+            <rect x="28" y="18" width="6" height="6" rx="1" fill="hsl(25, 90%, 85%)" stroke="hsl(270, 50%, 70%)" stroke-width="1" />
+            <rect x="14" y="28" width="6" height="6" rx="1" fill="hsl(25, 90%, 85%)" stroke="hsl(270, 50%, 70%)" stroke-width="1" />
+            <rect x="28" y="28" width="6" height="6" rx="1" fill="hsl(25, 90%, 85%)" stroke="hsl(270, 50%, 70%)" stroke-width="1" />
+            <!-- Door -->
+            <rect x="20" y="34" width="8" height="8" rx="1" fill="hsl(25, 90%, 55%)" />
+            <circle cx="26" cy="38" r="1" fill="hsl(270, 50%, 40%)" />
+          </svg>
+        </div>
+        <h3 class="travel__card-title">Размещение</h3>
+        <ul class="travel__list">
+          <li class="travel__list-item">
+            <span class="travel__list-icon">🏨</span>
+            <div>
+              <strong>Гостиницы рядом</strong>
+              <p>Рекомендуем бронировать заранее — отели в районе пр. Аль-Фараби</p>
+            </div>
+          </li>
+          <li class="travel__list-item">
+            <span class="travel__list-icon">📍</span>
+            <div>
+              <strong>Район проведения</strong>
+              <p>Верхняя часть Алматы, удобное расположение рядом с горами</p>
+            </div>
+          </li>
+          <li class="travel__list-item">
+            <span class="travel__list-icon">ℹ️</span>
+            <div>
+              <strong>Дополнительная информация</strong>
+              <p>Подробности о рекомендованных отелях будут отправлены в приглашении</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .travel__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .travel__card {
+    padding: var(--space-2xl);
+  }
+
+  .travel__icon {
+    margin-bottom: var(--space-lg);
+    display: flex;
+    justify-content: center;
+  }
+
+  .travel__card-title {
+    text-align: center;
+    color: var(--color-primary-dark);
+    margin-bottom: var(--space-xl);
+    font-size: 1.3rem;
+  }
+
+  .travel__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .travel__list-item {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
+  .travel__list-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .travel__list-item strong {
+    display: block;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.2rem;
+  }
+
+  .travel__list-item p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) {
+    .travel__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

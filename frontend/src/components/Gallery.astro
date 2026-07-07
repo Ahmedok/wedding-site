@@ -1,0 +1,150 @@
+---
+---
+
+<section class="section gallery" id="gallery">
+  <div class="container">
+    <h2 class="section__title">Галерея</h2>
+    <p class="section__subtitle">Фотографии появятся после свадьбы</p>
+
+    <div class="gallery__grid">
+      <!-- Pattern 1: Geometric circles -->
+      <div class="gallery__card">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="300" fill="hsl(270, 40%, 95%)" />
+          <circle cx="150" cy="150" r="80" fill="none" stroke="hsl(270, 50%, 75%)" stroke-width="2" />
+          <circle cx="150" cy="150" r="60" fill="none" stroke="hsl(25, 80%, 70%)" stroke-width="1.5" />
+          <circle cx="150" cy="150" r="40" fill="none" stroke="hsl(270, 50%, 80%)" stroke-width="1" />
+          <circle cx="150" cy="150" r="20" fill="hsl(25, 90%, 55%)" opacity="0.2" />
+          <circle cx="150" cy="150" r="5" fill="hsl(270, 50%, 40%)" opacity="0.6" />
+          <circle cx="90" cy="90" r="15" fill="hsl(270, 50%, 85%)" opacity="0.4" />
+          <circle cx="210" cy="210" r="15" fill="hsl(25, 90%, 85%)" opacity="0.4" />
+          <circle cx="210" cy="90" r="10" fill="hsl(270, 50%, 80%)" opacity="0.3" />
+          <circle cx="90" cy="210" r="10" fill="hsl(25, 90%, 80%)" opacity="0.3" />
+        </svg>
+      </div>
+
+      <!-- Pattern 2: Diamond grid -->
+      <div class="gallery__card">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="300" fill="hsl(25, 60%, 96%)" />
+          <pattern id="gDiamonds" width="40" height="40" patternUnits="userSpaceOnUse">
+            <rect x="14" y="0" width="12" height="12" fill="hsl(270, 50%, 80%)" opacity="0.3" transform="rotate(45, 20, 6)" />
+            <rect x="34" y="20" width="12" height="12" fill="hsl(25, 90%, 75%)" opacity="0.3" transform="rotate(45, 40, 26)" />
+          </pattern>
+          <rect width="300" height="300" fill="url(#gDiamonds)" />
+          <circle cx="150" cy="150" r="50" fill="hsl(270, 50%, 40%)" opacity="0.08" />
+        </svg>
+      </div>
+
+      <!-- Pattern 3: Floral rosette -->
+      <div class="gallery__card">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="300" fill="hsl(270, 30%, 96%)" />
+          <g transform="translate(150, 150)">
+            <ellipse cx="0" cy="-40" rx="15" ry="35" fill="hsl(270, 50%, 80%)" opacity="0.3" />
+            <ellipse cx="0" cy="-40" rx="15" ry="35" fill="hsl(270, 50%, 80%)" opacity="0.3" transform="rotate(45)" />
+            <ellipse cx="0" cy="-40" rx="15" ry="35" fill="hsl(25, 80%, 75%)" opacity="0.3" transform="rotate(90)" />
+            <ellipse cx="0" cy="-40" rx="15" ry="35" fill="hsl(25, 80%, 75%)" opacity="0.3" transform="rotate(135)" />
+            <ellipse cx="0" cy="-40" rx="15" ry="35" fill="hsl(270, 50%, 80%)" opacity="0.3" transform="rotate(180)" />
+            <ellipse cx="0" cy="-40" rx="15" ry="35" fill="hsl(270, 50%, 80%)" opacity="0.3" transform="rotate(225)" />
+            <ellipse cx="0" cy="-40" rx="15" ry="35" fill="hsl(25, 80%, 75%)" opacity="0.3" transform="rotate(270)" />
+            <ellipse cx="0" cy="-40" rx="15" ry="35" fill="hsl(25, 80%, 75%)" opacity="0.3" transform="rotate(315)" />
+            <circle r="15" fill="hsl(270, 50%, 40%)" opacity="0.15" />
+            <circle r="6" fill="hsl(25, 90%, 55%)" opacity="0.4" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Pattern 4: Waves -->
+      <div class="gallery__card">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="300" fill="hsl(270, 35%, 96%)" />
+          <path d="M 0 80 Q 75 40, 150 80 T 300 80" stroke="hsl(270, 50%, 75%)" stroke-width="2" fill="none" opacity="0.5" />
+          <path d="M 0 120 Q 75 80, 150 120 T 300 120" stroke="hsl(25, 80%, 65%)" stroke-width="2" fill="none" opacity="0.5" />
+          <path d="M 0 160 Q 75 120, 150 160 T 300 160" stroke="hsl(270, 50%, 75%)" stroke-width="2" fill="none" opacity="0.5" />
+          <path d="M 0 200 Q 75 160, 150 200 T 300 200" stroke="hsl(25, 80%, 65%)" stroke-width="2" fill="none" opacity="0.5" />
+          <path d="M 0 240 Q 75 200, 150 240 T 300 240" stroke="hsl(270, 50%, 80%)" stroke-width="1.5" fill="none" opacity="0.4" />
+          <circle cx="150" cy="150" r="30" fill="hsl(270, 50%, 40%)" opacity="0.06" />
+        </svg>
+      </div>
+
+      <!-- Pattern 5: Hexagons -->
+      <div class="gallery__card">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="300" fill="hsl(25, 40%, 97%)" />
+          <g opacity="0.3">
+            <polygon points="150,60 190,80 190,120 150,140 110,120 110,80" fill="none" stroke="hsl(270, 50%, 60%)" stroke-width="1.5" />
+            <polygon points="150,100 175,112 175,138 150,150 125,138 125,112" fill="hsl(270, 50%, 85%)" stroke="none" />
+            <polygon points="80,110 120,130 120,170 80,190 40,170 40,130" fill="none" stroke="hsl(25, 80%, 60%)" stroke-width="1.5" />
+            <polygon points="220,110 260,130 260,170 220,190 180,170 180,130" fill="none" stroke="hsl(25, 80%, 60%)" stroke-width="1.5" />
+            <polygon points="150,160 190,180 190,220 150,240 110,220 110,180" fill="none" stroke="hsl(270, 50%, 60%)" stroke-width="1.5" />
+          </g>
+          <circle cx="150" cy="150" r="8" fill="hsl(25, 90%, 55%)" opacity="0.3" />
+        </svg>
+      </div>
+
+      <!-- Pattern 6: Dots constellation -->
+      <div class="gallery__card">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="300" fill="hsl(270, 25%, 96%)" />
+          <circle cx="60" cy="60" r="8" fill="hsl(270, 50%, 70%)" opacity="0.4" />
+          <circle cx="120" cy="40" r="5" fill="hsl(25, 90%, 65%)" opacity="0.4" />
+          <circle cx="200" cy="70" r="10" fill="hsl(270, 50%, 75%)" opacity="0.3" />
+          <circle cx="250" cy="120" r="6" fill="hsl(25, 90%, 60%)" opacity="0.4" />
+          <circle cx="180" cy="150" r="12" fill="hsl(270, 50%, 80%)" opacity="0.25" />
+          <circle cx="80" cy="180" r="7" fill="hsl(25, 90%, 70%)" opacity="0.35" />
+          <circle cx="240" cy="200" r="9" fill="hsl(270, 50%, 65%)" opacity="0.3" />
+          <circle cx="140" cy="230" r="6" fill="hsl(270, 50%, 75%)" opacity="0.4" />
+          <circle cx="50" cy="250" r="11" fill="hsl(25, 90%, 75%)" opacity="0.25" />
+          <circle cx="220" cy="260" r="4" fill="hsl(270, 50%, 60%)" opacity="0.4" />
+          <line x1="60" y1="60" x2="120" y2="40" stroke="hsl(270, 50%, 80%)" stroke-width="0.5" opacity="0.3" />
+          <line x1="120" y1="40" x2="200" y2="70" stroke="hsl(270, 50%, 80%)" stroke-width="0.5" opacity="0.3" />
+          <line x1="200" y1="70" x2="250" y2="120" stroke="hsl(25, 80%, 75%)" stroke-width="0.5" opacity="0.3" />
+          <line x1="250" y1="120" x2="180" y2="150" stroke="hsl(270, 50%, 80%)" stroke-width="0.5" opacity="0.3" />
+          <line x1="180" y1="150" x2="80" y2="180" stroke="hsl(25, 80%, 75%)" stroke-width="0.5" opacity="0.3" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .gallery__card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: 1px solid rgba(var(--color-primary-rgb), 0.08);
+  }
+
+  .gallery__card:hover {
+    transform: scale(1.03);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .gallery__card svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 1;
+  }
+
+  @media (min-width: 640px) {
+    .gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

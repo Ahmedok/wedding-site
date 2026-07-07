@@ -1,0 +1,65 @@
+---
+---
+
+<section class="section rsvp-info" id="rsvp">
+  <div class="container container--narrow">
+    <div class="card rsvp-info__card">
+      <div class="rsvp-info__icon">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="10" width="44" height="36" rx="4" fill="hsl(270, 50%, 95%)" stroke="hsl(270, 50%, 40%)" stroke-width="2" />
+          <path d="M6 16L28 32L50 16" stroke="hsl(25, 90%, 55%)" stroke-width="2" fill="none" stroke-linecap="round" />
+          <path d="M6 46L20 32" stroke="hsl(270, 50%, 70%)" stroke-width="1.5" fill="none" stroke-linecap="round" />
+          <path d="M50 46L36 32" stroke="hsl(270, 50%, 70%)" stroke-width="1.5" fill="none" stroke-linecap="round" />
+          <!-- Heart seal -->
+          <circle cx="28" cy="30" r="8" fill="hsl(25, 90%, 55%)" opacity="0.2" />
+          <path d="M28 33C28 33 24 30 24 28C24 26.5 25.5 26 26.5 26.5C27.5 27 28 28 28 28C28 28 28.5 27 29.5 26.5C30.5 26 32 26.5 32 28C32 30 28 33 28 33Z" fill="hsl(25, 90%, 55%)" opacity="0.6" />
+        </svg>
+      </div>
+      <h2 class="rsvp-info__title">Подтвердите участие</h2>
+      <p class="rsvp-info__text">
+        Проверьте ваше приглашение для получения персональной ссылки RSVP.
+        По этой ссылке вы сможете подтвердить своё присутствие и указать дополнительную информацию.
+      </p>
+      <p class="rsvp-info__deadline">
+        Пожалуйста, ответьте до <strong>20 августа 2026</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rsvp-info__card {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl);
+    background: linear-gradient(135deg, var(--color-white), hsl(270, 50%, 98%));
+    border: 2px solid var(--color-primary-light);
+  }
+
+  .rsvp-info__icon {
+    margin-bottom: var(--space-lg);
+  }
+
+  .rsvp-info__title {
+    font-size: 1.8rem;
+    color: var(--color-primary-dark);
+    margin-bottom: var(--space-md);
+  }
+
+  .rsvp-info__text {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin: 0 auto var(--space-lg);
+    line-height: 1.7;
+  }
+
+  .rsvp-info__deadline {
+    display: inline-block;
+    background: var(--color-accent-light);
+    color: var(--color-accent-dark);
+    padding: 0.6rem 1.5rem;
+    border-radius: var(--radius-full);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+</style>

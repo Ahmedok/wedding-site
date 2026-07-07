@@ -1,0 +1,135 @@
+---
+---
+
+<div class="countdown" id="countdown" data-target="2026-09-05T15:00:00+06:00">
+  <div class="countdown__item">
+    <span class="countdown__number" id="cd-days">--</span>
+    <span class="countdown__label">Дней</span>
+  </div>
+  <div class="countdown__sep">:</div>
+  <div class="countdown__item">
+    <span class="countdown__number" id="cd-hours">--</span>
+    <span class="countdown__label">Часов</span>
+  </div>
+  <div class="countdown__sep">:</div>
+  <div class="countdown__item">
+    <span class="countdown__number" id="cd-minutes">--</span>
+    <span class="countdown__label">Минут</span>
+  </div>
+  <div class="countdown__sep">:</div>
+  <div class="countdown__item">
+    <span class="countdown__number" id="cd-seconds">--</span>
+    <span class="countdown__label">Секунд</span>
+  </div>
+</div>
+
+<style>
+  .countdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: var(--space-lg);
+    animation: fadeInUp 0.6s ease 0.6s forwards;
+    opacity: 0;
+  }
+
+  .countdown__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    padding: 0.8rem 1rem;
+    min-width: 70px;
+  }
+
+  .countdown__number {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1;
+  }
+
+  .countdown__label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.3rem;
+    font-weight: 500;
+  }
+
+  .countdown__sep {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.4);
+    padding-bottom: 1rem;
+  }
+
+  .countdown--today {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--color-accent);
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .countdown {
+      gap: 1rem;
+    }
+
+    .countdown__item {
+      padding: 1rem 1.5rem;
+      min-width: 90px;
+    }
+  }
+</style>
+
+<script>
+  function initCountdown() {
+    const el = document.getElementById('countdown');
+    if (!el) return;
+
+    const target = new Date(el.dataset.target || '2026-09-05T15:00:00+06:00').getTime();
+
+    function update() {
+      const now = Date.now();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        el.innerHTML = '<span class="countdown--today">Сегодня! 🎉</span>';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const daysEl = document.getElementById('cd-days');
+      const hoursEl = document.getElementById('cd-hours');
+      const minutesEl = document.getElementById('cd-minutes');
+      const secondsEl = document.getElementById('cd-seconds');
+
+      if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+      if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+      if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    update();
+    setInterval(update, 1000);
+  }
+
+  // Run when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCountdown);
+  } else {
+    initCountdown();
+  }
+</script>

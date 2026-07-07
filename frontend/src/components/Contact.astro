@@ -1,0 +1,107 @@
+---
+import { SITE_CONFIG } from '../config';
+---
+
+<section class="section section--alt contacts" id="contacts">
+  <div class="container container--narrow">
+    <h2 class="section__title">Контакты</h2>
+    <p class="section__subtitle">Если у вас есть вопросы, мы всегда на связи</p>
+
+    <div class="contacts__grid">
+      <!-- Phone -->
+      <a href={`tel:${SITE_CONFIG.contact.phone.replace(/[\s()-]/g, '')}`} class="card contacts__card">
+        <div class="contacts__icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4H12L14 10L11 12C12.5 15.5 15.5 18.5 19 20L21 17L27 19V26C27 27.1 26.1 28 25 28C14 27.5 4.5 18 4 7C4 5.9 4.9 5 6 5V4Z" fill="hsl(270, 50%, 95%)" stroke="hsl(270, 50%, 40%)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <span class="contacts__label">Телефон</span>
+        <span class="contacts__value">{SITE_CONFIG.contact.phone}</span>
+      </a>
+
+      <!-- Email -->
+      <a href={`mailto:${SITE_CONFIG.contact.email}`} class="card contacts__card">
+        <div class="contacts__icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="6" width="26" height="20" rx="3" fill="hsl(270, 50%, 95%)" stroke="hsl(270, 50%, 40%)" stroke-width="1.5" />
+            <path d="M3 9L16 18L29 9" stroke="hsl(25, 90%, 55%)" stroke-width="1.5" fill="none" stroke-linecap="round" />
+          </svg>
+        </div>
+        <span class="contacts__label">Email</span>
+        <span class="contacts__value">{SITE_CONFIG.contact.email}</span>
+      </a>
+
+      <!-- Telegram -->
+      <a href={`https://t.me/${SITE_CONFIG.contact.telegram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" class="card contacts__card">
+        <div class="contacts__icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="13" fill="hsl(270, 50%, 95%)" stroke="hsl(270, 50%, 40%)" stroke-width="1.5" />
+            <path d="M8 16L13 18L21 11" stroke="hsl(25, 90%, 55%)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M13 18L14 22L17 19" stroke="hsl(270, 50%, 40%)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <span class="contacts__label">Telegram</span>
+        <span class="contacts__value">{SITE_CONFIG.contact.telegram}</span>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href={`https://wa.me/${SITE_CONFIG.contact.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" class="card contacts__card">
+        <div class="contacts__icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="13" fill="hsl(270, 50%, 95%)" stroke="hsl(270, 50%, 40%)" stroke-width="1.5" />
+            <path d="M11 20L10 24L14 23C15.2 23.6 16.5 24 18 24C22 24 25 21 25 17C25 13 22 10 18 10C14 10 11 13 11 17C11 18.2 11.3 19.2 11.8 20L11 20Z" fill="hsl(270, 50%, 85%)" stroke="hsl(270, 50%, 40%)" stroke-width="1" />
+            <path d="M14 15H20M14 18H18" stroke="hsl(25, 90%, 55%)" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <span class="contacts__label">WhatsApp</span>
+        <span class="contacts__value">{SITE_CONFIG.contact.whatsapp}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacts__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .contacts__card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-xl);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .contacts__card:hover {
+    border-color: var(--color-primary);
+  }
+
+  .contacts__icon {
+    flex-shrink: 0;
+  }
+
+  .contacts__label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    display: block;
+    font-weight: 600;
+  }
+
+  .contacts__value {
+    color: var(--color-text);
+    font-weight: 500;
+    font-size: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .contacts__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

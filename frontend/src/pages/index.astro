@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import FloralDivider from '../components/FloralDivider.astro';
+import EventDetails from '../components/EventDetails.astro';
+import Travel from '../components/Travel.astro';
+import Gallery from '../components/Gallery.astro';
+import RsvpInfo from '../components/RsvpInfo.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Navbar />
+  <Hero />
+  <div class="content-sections">
+    <FloralDivider />
+    <EventDetails />
+    <FloralDivider flip={true} />
+    <Travel />
+    <FloralDivider />
+    <Gallery />
+    <FloralDivider flip={true} />
+    <RsvpInfo />
+    <FloralDivider />
+    <Contact />
+  </div>
+  <Footer />
+</Layout>
+
+<style>
+  /* Push content below fixed hero background on desktop */
+  .content-sections {
+    position: relative;
+    z-index: 1;
+    background: var(--color-bg);
+  }
+
+  @media (min-width: 768px) {
+    .content-sections {
+      margin-top: 0;
+    }
+  }
+</style>

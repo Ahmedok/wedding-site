@@ -1,0 +1,62 @@
+---
+interface Props {
+  flip?: boolean;
+}
+
+const { flip = false } = Astro.props;
+---
+
+<div class="floral-divider" class:list={[{ 'floral-divider--flip': flip }]}>
+  <svg viewBox="0 0 600 60" xmlns="http://www.w3.org/2000/svg" class="floral-divider__svg">
+    <!-- Center ornament -->
+    <g transform="translate(300, 30)">
+      <!-- Central flower -->
+      <circle cx="0" cy="0" r="5" fill="hsl(25, 90%, 55%)" opacity="0.8" />
+      <circle cx="0" cy="0" r="3" fill="hsl(270, 50%, 40%)" opacity="0.6" />
+      <!-- Petals -->
+      <ellipse cx="0" cy="-10" rx="3" ry="8" fill="hsl(270, 50%, 70%)" opacity="0.5" />
+      <ellipse cx="0" cy="-10" rx="3" ry="8" fill="hsl(270, 50%, 70%)" opacity="0.5" transform="rotate(60)" />
+      <ellipse cx="0" cy="-10" rx="3" ry="8" fill="hsl(270, 50%, 70%)" opacity="0.5" transform="rotate(120)" />
+      <ellipse cx="0" cy="-10" rx="3" ry="8" fill="hsl(270, 50%, 70%)" opacity="0.5" transform="rotate(180)" />
+      <ellipse cx="0" cy="-10" rx="3" ry="8" fill="hsl(270, 50%, 70%)" opacity="0.5" transform="rotate(240)" />
+      <ellipse cx="0" cy="-10" rx="3" ry="8" fill="hsl(270, 50%, 70%)" opacity="0.5" transform="rotate(300)" />
+    </g>
+    <!-- Left vine -->
+    <path d="M 50 30 Q 100 15, 150 28 T 250 25 T 290 30" stroke="hsl(270, 40%, 70%)" stroke-width="1.5" fill="none" opacity="0.6" />
+    <!-- Right vine -->
+    <path d="M 550 30 Q 500 15, 450 28 T 350 25 T 310 30" stroke="hsl(270, 40%, 70%)" stroke-width="1.5" fill="none" opacity="0.6" />
+    <!-- Small leaves left -->
+    <ellipse cx="120" cy="22" rx="4" ry="8" fill="hsl(270, 50%, 75%)" opacity="0.3" transform="rotate(-30, 120, 22)" />
+    <ellipse cx="180" cy="28" rx="3" ry="7" fill="hsl(25, 80%, 70%)" opacity="0.3" transform="rotate(20, 180, 28)" />
+    <ellipse cx="230" cy="23" rx="4" ry="7" fill="hsl(270, 50%, 75%)" opacity="0.3" transform="rotate(-15, 230, 23)" />
+    <!-- Small leaves right -->
+    <ellipse cx="480" cy="22" rx="4" ry="8" fill="hsl(270, 50%, 75%)" opacity="0.3" transform="rotate(30, 480, 22)" />
+    <ellipse cx="420" cy="28" rx="3" ry="7" fill="hsl(25, 80%, 70%)" opacity="0.3" transform="rotate(-20, 420, 28)" />
+    <ellipse cx="370" cy="23" rx="4" ry="7" fill="hsl(270, 50%, 75%)" opacity="0.3" transform="rotate(15, 370, 23)" />
+    <!-- Tiny dots -->
+    <circle cx="90" cy="28" r="1.5" fill="hsl(25, 90%, 55%)" opacity="0.4" />
+    <circle cx="200" cy="20" r="1.5" fill="hsl(270, 50%, 60%)" opacity="0.4" />
+    <circle cx="260" cy="26" r="1" fill="hsl(25, 90%, 55%)" opacity="0.3" />
+    <circle cx="510" cy="28" r="1.5" fill="hsl(25, 90%, 55%)" opacity="0.4" />
+    <circle cx="400" cy="20" r="1.5" fill="hsl(270, 50%, 60%)" opacity="0.4" />
+    <circle cx="340" cy="26" r="1" fill="hsl(25, 90%, 55%)" opacity="0.3" />
+  </svg>
+</div>
+
+<style>
+  .floral-divider {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    overflow: hidden;
+  }
+
+  .floral-divider--flip {
+    transform: scaleX(-1);
+  }
+
+  .floral-divider__svg {
+    width: min(100%, 500px);
+    height: auto;
+  }
+</style>

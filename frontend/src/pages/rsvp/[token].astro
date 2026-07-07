@@ -1,0 +1,480 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { SITE_CONFIG } from '../../config';
+
+export function getStaticPaths() {
+  // Return a single placeholder — the real token is read client-side from window.location
+  return [{ params: { token: '_' } }];
+}
+---
+
+<Layout title="RSVP — Свадьба Амины и Асылжана">
+  <div class="rsvp-page">
+    <header class="rsvp-header">
+      <a href="/" class="rsvp-header__back">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 10H5M5 10L10 5M5 10L10 15"/>
+        </svg>
+        На главную
+      </a>
+      <h1 class="rsvp-header__title">
+        <span class="rsvp-header__names">Амина & Асылжан</span>
+      </h1>
+    </header>
+
+    <main class="rsvp-main container container--narrow">
+      <div id="rsvp-app" data-api-url={SITE_CONFIG.apiBaseUrl}>
+        <!-- Loading state -->
+        <div id="rsvp-loading" class="rsvp-state">
+          <div class="spinner"></div>
+          <p class="text-center text-muted">Загружаем ваше приглашение...</p>
+        </div>
+
+        <!-- Error state -->
+        <div id="rsvp-error" class="rsvp-state" style="display:none;">
+          <div class="card rsvp-error-card">
+            <div class="text-center">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto var(--space-lg);">
+                <circle cx="28" cy="28" r="24" fill="hsl(0, 80%, 95%)" stroke="hsl(0, 60%, 50%)" stroke-width="2" />
+                <path d="M28 18V30" stroke="hsl(0, 60%, 50%)" stroke-width="3" stroke-linecap="round" />
+                <circle cx="28" cy="36" r="2" fill="hsl(0, 60%, 50%)" />
+              </svg>
+              <h2 style="margin-bottom: var(--space-md);">Приглашение не найдено</h2>
+              <p class="text-muted">Мы не смогли найти ваше приглашение. Пожалуйста, убедитесь, что вы используете правильную ссылку из приглашения.</p>
+              <p class="text-muted" style="margin-top: var(--space-lg);">Если проблема сохраняется, свяжитесь с нами:</p>
+              <div style="margin-top: var(--space-md);">
+                <a href={`tel:${SITE_CONFIG.contact.phone.replace(/[\s()-]/g, '')}`} class="btn btn-secondary btn--sm" style="margin: 0.25rem;">{SITE_CONFIG.contact.phone}</a>
+                <a href={`https://t.me/${SITE_CONFIG.contact.telegram.replace('@', '')}`} class="btn btn-secondary btn--sm" style="margin: 0.25rem;">Telegram</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RSVP Form -->
+        <div id="rsvp-form-container" class="rsvp-state" style="display:none;">
+          <div class="rsvp-greeting card">
+            <h2 id="rsvp-greeting-text" class="rsvp-greeting__title"></h2>
+            <p class="rsvp-greeting__subtitle">Мы будем рады видеть вас на нашей свадьбе!</p>
+            <div class="rsvp-greeting__deadline">
+              Пожалуйста, ответьте до <strong>{SITE_CONFIG.rsvpDeadline}</strong>
+            </div>
+          </div>
+
+          <form id="rsvp-form" novalidate>
+            <div id="guests-container">
+              <!-- Guest cards will be inserted here by JS -->
+            </div>
+
+            <div class="card rsvp-shared-section">
+              <h3 class="rsvp-section-title">Контактная информация</h3>
+
+              <div class="form-group">
+                <label class="form-label" for="rsvp-email">Email</label>
+                <input type="email" id="rsvp-email" name="email" class="form-input" placeholder="your@email.com" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="rsvp-phone">Телефон</label>
+                <input type="tel" id="rsvp-phone" name="phone" class="form-input" placeholder="+7 (XXX) XXX-XX-XX" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="rsvp-message">Сообщение для пары</label>
+                <textarea id="rsvp-message" name="message" class="form-textarea" rows="3" placeholder="Ваши пожелания или комментарии (необязательно)"></textarea>
+              </div>
+
+              <!-- Honeypot -->
+              <div class="visually-hidden-honeypot" aria-hidden="true">
+                <label for="rsvp-website">Website</label>
+                <input type="text" id="rsvp-website" name="_website" tabindex="-1" autocomplete="off" />
+              </div>
+            </div>
+
+            <div class="rsvp-actions">
+              <button type="submit" id="rsvp-submit" class="btn btn-primary btn--lg rsvp-submit-btn">
+                Отправить ответ
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Confirmation state -->
+        <div id="rsvp-confirmation" class="rsvp-state" style="display:none;">
+          <div class="card rsvp-confirmation-card text-center">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto var(--space-lg);">
+              <circle cx="32" cy="32" r="28" fill="hsl(145, 60%, 92%)" stroke="hsl(145, 60%, 40%)" stroke-width="2" />
+              <path d="M20 32L28 40L44 24" stroke="hsl(145, 60%, 40%)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <h2 style="color: hsl(145, 60%, 30%); margin-bottom: var(--space-md);">Спасибо!</h2>
+            <p class="text-muted" style="font-size: 1.05rem;">
+              Ваш ответ сохранён. Вы можете изменить его в любое время по этой же ссылке.
+            </p>
+            <button id="rsvp-edit-again" class="btn btn-secondary" style="margin-top: var(--space-xl);">
+              Изменить ответ
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="rsvp-footer">
+      <p>С любовью, Амина & Асылжан · 5 сентября 2026</p>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  .rsvp-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+  }
+
+  .rsvp-header {
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    color: var(--color-white);
+    padding: var(--space-lg) var(--space-lg);
+    text-align: center;
+  }
+
+  .rsvp-header__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-sm);
+    text-decoration: none;
+  }
+
+  .rsvp-header__back:hover {
+    color: var(--color-white);
+  }
+
+  .rsvp-header__title {
+    margin: 0;
+  }
+
+  .rsvp-header__names {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--color-white);
+  }
+
+  .rsvp-main {
+    flex: 1;
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .rsvp-greeting {
+    text-align: center;
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-xl);
+    background: linear-gradient(135deg, var(--color-white), hsl(270, 50%, 98%));
+    border: 2px solid var(--color-primary-light);
+  }
+
+  .rsvp-greeting__title {
+    color: var(--color-primary-dark);
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    margin-bottom: var(--space-sm);
+  }
+
+  .rsvp-greeting__subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .rsvp-greeting__deadline {
+    display: inline-block;
+    background: var(--color-accent-light);
+    color: var(--color-accent-dark);
+    padding: 0.5rem 1.2rem;
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+  }
+
+  .rsvp-section-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-primary-dark);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--color-primary-light);
+  }
+
+  .rsvp-shared-section {
+    margin-top: var(--space-xl);
+    padding: var(--space-xl);
+  }
+
+  .rsvp-actions {
+    margin-top: var(--space-xl);
+    text-align: center;
+  }
+
+  .rsvp-submit-btn {
+    min-width: 250px;
+  }
+
+  .rsvp-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .rsvp-error-card {
+    padding: var(--space-3xl) var(--space-xl);
+  }
+
+  .rsvp-confirmation-card {
+    padding: var(--space-3xl) var(--space-xl);
+  }
+
+  .rsvp-footer {
+    text-align: center;
+    padding: var(--space-lg);
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-family: var(--font-heading);
+  }
+
+  /* Guest card styling */
+  :global(.guest-card) {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-xl);
+  }
+
+  :global(.guest-card__header) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  :global(.guest-card__number) {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  :global(.guest-card__name) {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-text);
+  }
+
+  :global(.dietary-field) {
+    margin-top: var(--space-md);
+    animation: fadeIn 0.3s ease;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const app = document.getElementById('rsvp-app');
+    if (!app) return;
+
+    const apiUrl = app.dataset.apiUrl || 'http://localhost:3000';
+    const path = window.location.pathname;
+    const tokenMatch = path.match(/\/rsvp\/([^/]+)/);
+    const token = tokenMatch ? tokenMatch[1] : null;
+
+    const loadingEl = document.getElementById('rsvp-loading');
+    const errorEl = document.getElementById('rsvp-error');
+    const formContainer = document.getElementById('rsvp-form-container');
+    const confirmationEl = document.getElementById('rsvp-confirmation');
+    const formEl = document.getElementById('rsvp-form') as HTMLFormElement;
+    const greetingText = document.getElementById('rsvp-greeting-text');
+    const guestsContainer = document.getElementById('guests-container');
+    const submitBtn = document.getElementById('rsvp-submit') as HTMLButtonElement;
+    const editAgainBtn = document.getElementById('rsvp-edit-again');
+
+    let inviteData: any = null;
+
+    function showState(state: string) {
+      [loadingEl, errorEl, formContainer, confirmationEl].forEach(el => {
+        if (el) el.style.display = 'none';
+      });
+      const target = document.getElementById(`rsvp-${state}`);
+      if (target) target.style.display = 'block';
+    }
+
+    function renderGuests(guests: any[]) {
+      if (!guestsContainer) return;
+      guestsContainer.innerHTML = '';
+
+      guests.forEach((guest: any, index: number) => {
+        const isPlaceholder = guest.is_placeholder;
+        const isAttending = guest.attending;
+        const card = document.createElement('div');
+        card.className = 'card guest-card';
+        card.innerHTML = `
+          <div class="guest-card__header">
+            <span class="guest-card__number">${index + 1}</span>
+            <span class="guest-card__name">${isPlaceholder ? '' : guest.name}</span>
+          </div>
+
+          ${isPlaceholder ? `
+            <div class="form-group">
+              <label class="form-label" for="guest-name-${guest.id}">Имя гостя</label>
+              <input type="text" id="guest-name-${guest.id}" class="form-input guest-name" data-guest-id="${guest.id}" value="${guest.name || ''}" placeholder="Введите имя" />
+            </div>
+          ` : `
+            <input type="hidden" class="guest-name" data-guest-id="${guest.id}" value="${guest.name}" />
+          `}
+
+          <div class="form-group">
+            <label class="form-label">Присутствие</label>
+            <div class="radio-group">
+              <div class="radio-option radio-option--yes">
+                <input type="radio" id="attend-yes-${guest.id}" name="attending-${guest.id}" value="true" ${isAttending === true ? 'checked' : ''} />
+                <label for="attend-yes-${guest.id}">Да</label>
+              </div>
+              <div class="radio-option radio-option--no">
+                <input type="radio" id="attend-no-${guest.id}" name="attending-${guest.id}" value="false" ${isAttending === false ? 'checked' : ''} />
+                <label for="attend-no-${guest.id}">Нет</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="dietary-field" id="dietary-${guest.id}" style="display: ${isAttending === true ? 'block' : 'none'}">
+            <div class="form-group">
+              <label class="form-label" for="dietary-input-${guest.id}">Диетические ограничения</label>
+              <textarea id="dietary-input-${guest.id}" class="form-textarea guest-dietary" data-guest-id="${guest.id}" rows="2" placeholder="Аллергии, вегетарианство и т.д. (необязательно)">${guest.dietary_restrictions || ''}</textarea>
+            </div>
+          </div>
+        `;
+        guestsContainer.appendChild(card);
+
+        // Toggle dietary field
+        const yesRadio = card.querySelector(`#attend-yes-${guest.id}`) as HTMLInputElement;
+        const noRadio = card.querySelector(`#attend-no-${guest.id}`) as HTMLInputElement;
+        const dietaryDiv = card.querySelector(`#dietary-${guest.id}`) as HTMLElement;
+
+        yesRadio?.addEventListener('change', () => {
+          if (dietaryDiv) dietaryDiv.style.display = 'block';
+        });
+
+        noRadio?.addEventListener('change', () => {
+          if (dietaryDiv) dietaryDiv.style.display = 'none';
+        });
+      });
+    }
+
+    async function loadInvite() {
+      if (!token) {
+        showState('error');
+        return;
+      }
+
+      try {
+        const res = await fetch(`${apiUrl}/api/invite/${token}`);
+        if (!res.ok) throw new Error('Not found');
+
+        inviteData = await res.json();
+
+        // Set greeting
+        if (greetingText) {
+          greetingText.textContent = `Дорогие ${inviteData.household_label}!`;
+        }
+
+        // Render guest cards
+        renderGuests(inviteData.guests || []);
+
+        // Pre-fill shared fields
+        const emailInput = document.getElementById('rsvp-email') as HTMLInputElement;
+        const phoneInput = document.getElementById('rsvp-phone') as HTMLInputElement;
+        const messageInput = document.getElementById('rsvp-message') as HTMLTextAreaElement;
+
+        if (emailInput && inviteData.email) emailInput.value = inviteData.email;
+        if (phoneInput && inviteData.phone) phoneInput.value = inviteData.phone;
+        if (messageInput && inviteData.message) messageInput.value = inviteData.message;
+
+        showState('form-container');
+      } catch (e) {
+        showState('error');
+      }
+    }
+
+    // Form submission
+    formEl?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Honeypot check
+      const honeypot = document.getElementById('rsvp-website') as HTMLInputElement;
+      if (honeypot && honeypot.value) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Отправляем...';
+
+      const guestNameInputs = document.querySelectorAll('.guest-name') as NodeListOf<HTMLInputElement>;
+      const guests: any[] = [];
+
+      guestNameInputs.forEach(input => {
+        const guestId = input.dataset.guestId;
+        const attendingYes = document.querySelector(`#attend-yes-${guestId}`) as HTMLInputElement;
+        const attendingNo = document.querySelector(`#attend-no-${guestId}`) as HTMLInputElement;
+        const dietaryInput = document.querySelector(`.guest-dietary[data-guest-id="${guestId}"]`) as HTMLTextAreaElement;
+
+        let attending: boolean | null = null;
+        if (attendingYes?.checked) attending = true;
+        if (attendingNo?.checked) attending = false;
+
+        guests.push({
+          id: guestId,
+          name: input.value,
+          attending,
+          dietary_restrictions: dietaryInput?.value || '',
+        });
+      });
+
+      const emailInput = document.getElementById('rsvp-email') as HTMLInputElement;
+      const phoneInput = document.getElementById('rsvp-phone') as HTMLInputElement;
+      const messageInput = document.getElementById('rsvp-message') as HTMLTextAreaElement;
+
+      const payload = {
+        guests,
+        email: emailInput?.value || '',
+        phone: phoneInput?.value || '',
+        message: messageInput?.value || '',
+      };
+
+      try {
+        const res = await fetch(`${apiUrl}/api/invite/${token}/rsvp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) throw new Error('Submit failed');
+        showState('confirmation');
+      } catch (err) {
+        alert('Произошла ошибка при отправке. Пожалуйста, попробуйте ещё раз.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Отправить ответ';
+      }
+    });
+
+    // Edit again
+    editAgainBtn?.addEventListener('click', () => {
+      showState('form-container');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Отправить ответ';
+    });
+
+    // Load invite data
+    loadInvite();
+  });
+</script>

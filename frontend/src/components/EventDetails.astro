@@ -1,0 +1,142 @@
+---
+import { SITE_CONFIG } from '../config';
+---
+
+<section class="section details" id="details">
+  <div class="container">
+    <h2 class="section__title">Детали торжества</h2>
+    <p class="section__subtitle">Мы будем рады видеть вас в этот особенный день</p>
+
+    <div class="details__grid">
+      <!-- Date & Time Card -->
+      <div class="card details__card">
+        <div class="details__icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="hsl(270, 50%, 40%)" stroke-width="2" fill="hsl(270, 50%, 95%)" />
+            <circle cx="24" cy="24" r="2" fill="hsl(270, 50%, 40%)" />
+            <line x1="24" y1="24" x2="24" y2="14" stroke="hsl(270, 50%, 40%)" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="24" y1="24" x2="32" y2="24" stroke="hsl(25, 90%, 55%)" stroke-width="2" stroke-linecap="round" />
+            <!-- Hour marks -->
+            <line x1="24" y1="4" x2="24" y2="7" stroke="hsl(270, 50%, 70%)" stroke-width="1.5" />
+            <line x1="44" y1="24" x2="41" y2="24" stroke="hsl(270, 50%, 70%)" stroke-width="1.5" />
+            <line x1="24" y1="44" x2="24" y2="41" stroke="hsl(270, 50%, 70%)" stroke-width="1.5" />
+            <line x1="4" y1="24" x2="7" y2="24" stroke="hsl(270, 50%, 70%)" stroke-width="1.5" />
+          </svg>
+        </div>
+        <h3 class="details__card-title">Дата и время</h3>
+        <p class="details__card-main">5 сентября 2026</p>
+        <p class="details__card-sub">Суббота</p>
+        <div class="details__card-accent">
+          Сбор гостей в {SITE_CONFIG.gatheringTime}
+        </div>
+      </div>
+
+      <!-- Venue Card -->
+      <div class="card details__card details__card--venue">
+        <div class="details__icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4C16.268 4 10 10.268 10 18C10 28 24 44 24 44C24 44 38 28 38 18C38 10.268 31.732 4 24 4Z" fill="hsl(270, 50%, 95%)" stroke="hsl(270, 50%, 40%)" stroke-width="2" />
+            <circle cx="24" cy="18" r="6" fill="hsl(25, 90%, 55%)" opacity="0.8" />
+            <circle cx="24" cy="18" r="3" fill="hsl(270, 50%, 40%)" />
+          </svg>
+        </div>
+        <h3 class="details__card-title">Место проведения</h3>
+        <p class="details__card-main">{SITE_CONFIG.venue.name}</p>
+        <p class="details__card-sub">{SITE_CONFIG.venue.hall}</p>
+        <p class="details__card-address">{SITE_CONFIG.venue.address}</p>
+        <a href={SITE_CONFIG.venue.mapUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn--sm details__map-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1C5.243 1 3 3.243 3 6c0 4 5 9 5 9s5-5 5-9c0-2.757-2.243-5-5-5zm0 7a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          Открыть в 2GIS
+        </a>
+      </div>
+
+      <!-- Dress Code Card -->
+      <div class="card details__card">
+        <div class="details__icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L14 12L8 14L12 28L16 42H32L36 28L40 14L34 12L30 6" stroke="hsl(270, 50%, 40%)" stroke-width="2" fill="hsl(270, 50%, 95%)" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M18 6C18 6 20 10 24 10C28 10 30 6 30 6" stroke="hsl(270, 50%, 40%)" stroke-width="2" fill="none" stroke-linecap="round" />
+            <circle cx="24" cy="18" r="2" fill="hsl(25, 90%, 55%)" />
+            <circle cx="24" cy="25" r="2" fill="hsl(25, 90%, 55%)" />
+            <circle cx="24" cy="32" r="2" fill="hsl(25, 90%, 55%)" />
+            <!-- Hanger hook -->
+            <path d="M24 2C24 2 28 2 28 5C28 7 24 6 24 6" stroke="hsl(270, 50%, 60%)" stroke-width="1.5" fill="none" stroke-linecap="round" />
+          </svg>
+        </div>
+        <h3 class="details__card-title">Дресс-код</h3>
+        <p class="details__card-main">{SITE_CONFIG.dressCode}</p>
+        <p class="details__card-sub">Приходите в том, в чём вам будет удобно и красиво</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .details__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .details__card {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-xl);
+  }
+
+  .details__icon {
+    margin-bottom: var(--space-lg);
+    display: flex;
+    justify-content: center;
+  }
+
+  .details__card-title {
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
+
+  .details__card-main {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+
+  .details__card-sub {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .details__card-accent {
+    display: inline-block;
+    background: var(--color-accent-light);
+    color: var(--color-accent-dark);
+    padding: 0.4rem 1.2rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: var(--space-sm);
+  }
+
+  .details__card-address {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .details__map-btn {
+    margin-top: var(--space-sm);
+  }
+
+  @media (min-width: 768px) {
+    .details__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

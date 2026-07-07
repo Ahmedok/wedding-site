@@ -1,0 +1,497 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE_CONFIG } from '../config';
+---
+
+<Layout title="Админ-панель — Свадьба Амины и Асылжана" description="Панель управления RSVP">
+  <div class="admin-page" id="admin-app" data-api-url={SITE_CONFIG.apiBaseUrl}>
+    <header class="admin-header">
+      <div class="container">
+        <div class="admin-header__inner">
+          <a href="/" class="admin-header__back">← На сайт</a>
+          <h1 class="admin-header__title">Панель управления</h1>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main container">
+      <!-- Auth screen -->
+      <div id="admin-auth" class="admin-auth">
+        <div class="card admin-auth__card">
+          <h2 class="admin-auth__title">Вход в админ-панель</h2>
+          <form id="admin-login-form">
+            <div class="form-group">
+              <label class="form-label" for="admin-password">Пароль</label>
+              <input type="password" id="admin-password" class="form-input" placeholder="Введите пароль" autocomplete="current-password" />
+            </div>
+            <p id="admin-auth-error" class="form-error" style="display:none;">Неверный пароль</p>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Войти</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Dashboard -->
+      <div id="admin-dashboard" style="display:none;">
+        <!-- Stats -->
+        <div class="admin-stats" id="admin-stats">
+          <div class="admin-stat card">
+            <span class="admin-stat__number" id="stat-total">0</span>
+            <span class="admin-stat__label">Всего приглашено</span>
+          </div>
+          <div class="admin-stat card">
+            <span class="admin-stat__number admin-stat__number--yes" id="stat-confirmed">0</span>
+            <span class="admin-stat__label">Подтвердили</span>
+          </div>
+          <div class="admin-stat card">
+            <span class="admin-stat__number admin-stat__number--no" id="stat-declined">0</span>
+            <span class="admin-stat__label">Отказались</span>
+          </div>
+          <div class="admin-stat card">
+            <span class="admin-stat__number admin-stat__number--pending" id="stat-pending">0</span>
+            <span class="admin-stat__label">Ожидают ответа</span>
+          </div>
+        </div>
+
+        <!-- Filters and actions -->
+        <div class="admin-toolbar">
+          <div class="admin-filters">
+            <button class="admin-filter active" data-filter="all">Все</button>
+            <button class="admin-filter" data-filter="responded">Ответили</button>
+            <button class="admin-filter" data-filter="pending">Ожидают</button>
+            <button class="admin-filter" data-filter="declined">Отказались</button>
+          </div>
+          <button id="admin-export" class="btn btn-secondary btn--sm">
+            📥 Экспортировать CSV
+          </button>
+        </div>
+
+        <!-- Table -->
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="admin-table">
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="household">Семья</th>
+                <th>Гости</th>
+                <th>Диетические ограничения</th>
+                <th class="sortable" data-sort="contact">Контакт</th>
+                <th class="sortable" data-sort="updated">Обновлено</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body">
+              <!-- Rows inserted by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <p id="admin-empty" class="text-center text-muted" style="display:none; padding: var(--space-2xl);">
+          Нет данных для отображения
+        </p>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .admin-page {
+    min-height: 100vh;
+    background: var(--color-bg);
+  }
+
+  .admin-header {
+    background: var(--color-primary-dark);
+    color: var(--color-white);
+    padding: var(--space-md) 0;
+  }
+
+  .admin-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .admin-header__back {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.85rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .admin-header__back:hover {
+    color: white;
+  }
+
+  .admin-header__title {
+    font-size: 1.2rem;
+    margin: 0;
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
+
+  .admin-main {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  /* Auth */
+  .admin-auth {
+    display: flex;
+    justify-content: center;
+    padding-top: var(--space-3xl);
+  }
+
+  .admin-auth__card {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--space-2xl);
+  }
+
+  .admin-auth__title {
+    text-align: center;
+    color: var(--color-primary-dark);
+    margin-bottom: var(--space-xl);
+    font-size: 1.3rem;
+  }
+
+  /* Stats */
+  .admin-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+
+  .admin-stat {
+    text-align: center;
+    padding: var(--space-lg);
+  }
+
+  .admin-stat__number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .admin-stat__number--yes { color: hsl(145, 60%, 35%); }
+  .admin-stat__number--no { color: hsl(0, 60%, 45%); }
+  .admin-stat__number--pending { color: var(--color-accent); }
+
+  .admin-stat__label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  /* Toolbar */
+  .admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .admin-filters {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  .admin-filter {
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--color-bg-alt);
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+  }
+
+  .admin-filter.active {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+  }
+
+  .admin-filter:hover:not(.active) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  /* Table */
+  .admin-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.08);
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-white);
+    font-size: 0.9rem;
+  }
+
+  .admin-table th {
+    background: var(--color-bg-alt);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    border-bottom: 2px solid var(--color-primary-light);
+  }
+
+  .admin-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .admin-table th.sortable:hover {
+    color: var(--color-primary);
+  }
+
+  .admin-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-bg-alt);
+    vertical-align: top;
+  }
+
+  .admin-table tr:hover td {
+    background: hsl(270, 20%, 99%);
+  }
+
+  :global(.guest-status) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.15rem 0;
+    font-size: 0.85rem;
+  }
+
+  :global(.guest-status--yes) { color: hsl(145, 60%, 35%); }
+  :global(.guest-status--no) { color: hsl(0, 60%, 45%); }
+  :global(.guest-status--pending) { color: var(--color-text-light); }
+
+  @media (min-width: 768px) {
+    .admin-stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const app = document.getElementById('admin-app');
+    if (!app) return;
+
+    const apiUrl = app.dataset.apiUrl || 'http://localhost:3000';
+    let password = '';
+    let allInvites: any[] = [];
+    let currentFilter = 'all';
+    let sortField = 'household';
+    let sortDir = 'asc';
+
+    const authEl = document.getElementById('admin-auth')!;
+    const dashboardEl = document.getElementById('admin-dashboard')!;
+    const loginForm = document.getElementById('admin-login-form') as HTMLFormElement;
+    const passwordInput = document.getElementById('admin-password') as HTMLInputElement;
+    const authError = document.getElementById('admin-auth-error')!;
+    const tableBody = document.getElementById('admin-table-body')!;
+    const emptyMsg = document.getElementById('admin-empty')!;
+    const exportBtn = document.getElementById('admin-export')!;
+
+    async function apiRequest(endpoint: string, options: any = {}) {
+      const res = await fetch(`${apiUrl}${endpoint}`, {
+        ...options,
+        headers: {
+          ...options.headers,
+          'x-admin-password': password,
+        },
+      });
+      if (res.status === 401 || res.status === 403) throw new Error('Unauthorized');
+      return res;
+    }
+
+    async function loadDashboard() {
+      try {
+        const res = await apiRequest('/api/admin/invites');
+        if (!res.ok) throw new Error('Failed');
+        allInvites = await res.json();
+
+        updateStats();
+        renderTable();
+
+        authEl.style.display = 'none';
+        dashboardEl.style.display = 'block';
+      } catch (e: any) {
+        if (e.message === 'Unauthorized') {
+          authError.style.display = 'block';
+          authError.textContent = 'Неверный пароль';
+          authEl.style.display = 'flex';
+          dashboardEl.style.display = 'none';
+        }
+      }
+    }
+
+    function updateStats() {
+      let total = 0, confirmed = 0, declined = 0, pending = 0;
+
+      allInvites.forEach((invite: any) => {
+        (invite.guests || []).forEach((g: any) => {
+          total++;
+          if (g.attending === true) confirmed++;
+          else if (g.attending === false) declined++;
+          else pending++;
+        });
+      });
+
+      document.getElementById('stat-total')!.textContent = String(total);
+      document.getElementById('stat-confirmed')!.textContent = String(confirmed);
+      document.getElementById('stat-declined')!.textContent = String(declined);
+      document.getElementById('stat-pending')!.textContent = String(pending);
+    }
+
+    function filterInvites() {
+      if (currentFilter === 'all') return allInvites;
+      return allInvites.filter((invite: any) => {
+        const guests = invite.guests || [];
+        if (currentFilter === 'responded') {
+          return guests.some((g: any) => g.attending !== null && g.attending !== undefined);
+        }
+        if (currentFilter === 'pending') {
+          return guests.every((g: any) => g.attending === null || g.attending === undefined);
+        }
+        if (currentFilter === 'declined') {
+          return guests.every((g: any) => g.attending === false);
+        }
+        return true;
+      });
+    }
+
+    function sortInvites(invites: any[]) {
+      return [...invites].sort((a, b) => {
+        let aVal: any, bVal: any;
+        if (sortField === 'household') {
+          aVal = a.household_label || '';
+          bVal = b.household_label || '';
+        } else if (sortField === 'contact') {
+          aVal = a.email || a.phone || '';
+          bVal = b.email || b.phone || '';
+        } else if (sortField === 'updated') {
+          aVal = a.updated_at || '';
+          bVal = b.updated_at || '';
+        } else {
+          aVal = '';
+          bVal = '';
+        }
+        const cmp = String(aVal).localeCompare(String(bVal), 'ru');
+        return sortDir === 'asc' ? cmp : -cmp;
+      });
+    }
+
+    function renderTable() {
+      const filtered = filterInvites();
+      const sorted = sortInvites(filtered);
+
+      if (sorted.length === 0) {
+        tableBody.innerHTML = '';
+        emptyMsg.style.display = 'block';
+        return;
+      }
+
+      emptyMsg.style.display = 'none';
+      tableBody.innerHTML = sorted.map((invite: any) => {
+        const guests = invite.guests || [];
+        const guestsHtml = guests.map((g: any) => {
+          let statusIcon = '—';
+          let statusClass = 'guest-status--pending';
+          if (g.attending === true) { statusIcon = '✓'; statusClass = 'guest-status--yes'; }
+          else if (g.attending === false) { statusIcon = '✗'; statusClass = 'guest-status--no'; }
+          return `<span class="guest-status ${statusClass}">${statusIcon} ${g.display_name || g.name || '(без имени)'}</span>`;
+        }).join('<br/>');
+
+        const dietaryList = guests
+          .filter((g: any) => g.dietary_restrictions)
+          .map((g: any) => `${g.display_name || g.name || '(без имени)'}: ${g.dietary_restrictions}`)
+          .join('; ') || '—';
+
+        const contact = [invite.email, invite.phone].filter(Boolean).join(', ') || '—';
+
+        const updated = invite.updated_at
+          ? new Date(invite.updated_at).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' })
+          : '—';
+
+        return `<tr>
+          <td><strong>${invite.household_label || '—'}</strong></td>
+          <td>${guestsHtml}</td>
+          <td style="font-size:0.85rem;">${dietaryList}</td>
+          <td style="font-size:0.85rem;">${contact}</td>
+          <td style="font-size:0.85rem; white-space:nowrap;">${updated}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    // Login form
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      password = passwordInput.value;
+      authError.style.display = 'none';
+      await loadDashboard();
+    });
+
+    // Filters
+    document.querySelectorAll('.admin-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.admin-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = (btn as HTMLElement).dataset.filter || 'all';
+        renderTable();
+      });
+    });
+
+    // Sort headers
+    document.querySelectorAll('.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const field = (th as HTMLElement).dataset.sort || '';
+        if (sortField === field) {
+          sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortField = field;
+          sortDir = 'asc';
+        }
+        renderTable();
+      });
+    });
+
+    // Export CSV
+    exportBtn?.addEventListener('click', async () => {
+      try {
+        const res = await apiRequest('/api/admin/export.csv');
+        if (!res.ok) throw new Error('Export failed');
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'rsvp-export.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        alert('Ошибка при экспорте');
+      }
+    });
+  });
+</script>
