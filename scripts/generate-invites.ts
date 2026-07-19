@@ -186,9 +186,7 @@ function main(): void {
         insertGuest.run(inviteId, 'Гость', 1);
       }
 
-       const rsvpUrl = siteUrl.includes('localhost') 
-        ? `${siteUrl}/rsvp?token=${token}` 
-        : `${siteUrl}/rsvp/${token}`;
+      const rsvpUrl = `${siteUrl}/rsvp?token=${token}`;
       output.push({ household_label: householdLabel, rsvp_url: rsvpUrl });
       createdCount++;
 
