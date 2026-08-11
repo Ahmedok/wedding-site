@@ -55,7 +55,7 @@ app.get("/rsvp", (_req, res) => {
 });
 
 // Catch-all: serve main page for unknown routes
-app.get("*", (_req, res) => {
+app.get("{*path}", (_req, res) => {
   res.sendFile(path.join(publicDir, "index.html"), (err) => {
     if (err) res.status(404).send("Страница не найдена");
   });
