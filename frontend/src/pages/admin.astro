@@ -298,7 +298,7 @@ import { SITE_CONFIG } from '../config';
     const app = document.getElementById('admin-app');
     if (!app) return;
 
-    const apiUrl = app.dataset.apiUrl || 'http://localhost:3000';
+    const apiUrl = app.dataset.apiUrl ?? '';
     let password = '';
     let allInvites: any[] = [];
     let currentFilter = 'all';

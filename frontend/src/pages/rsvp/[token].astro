@@ -286,7 +286,7 @@ export function getStaticPaths() {
     const app = document.getElementById('rsvp-app');
     if (!app) return;
 
-    const apiUrl = app.dataset.apiUrl || 'http://localhost:3000';
+    const apiUrl = app.dataset.apiUrl ?? '';
     const path = window.location.pathname;
     const tokenMatch = path.match(/\/rsvp\/([^/]+)/);
     const token = tokenMatch ? tokenMatch[1] : null;
