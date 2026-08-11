@@ -1,9 +1,9 @@
-version: '3.8'
-
 services:
-  backend:
-    build: ./backend
-    container_name: wedding-backend
+  wedding:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wedding-site
     ports:
       - "${PORT:-3000}:3000"
     volumes:

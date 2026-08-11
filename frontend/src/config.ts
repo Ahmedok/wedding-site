@@ -19,6 +19,6 @@ export const SITE_CONFIG = {
   },
   apiBaseUrl:
     typeof window !== "undefined"
-      ? import.meta.env.PUBLIC_API_URL || "http://localhost:3000"
-      : "http://localhost:3000",
+      ? import.meta.env.PUBLIC_API_URL || ""
+      : "",
 } as const;
