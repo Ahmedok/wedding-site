@@ -22,3 +22,17 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# database
+*.db
+*.db-wal
+*.db-shm
+backend/data/
+
+# guest data (sensitive)
+*.csv
+!sample-guests.csv
+scripts/output-invites.csv
+
+# wrangler
+.wrangler/
