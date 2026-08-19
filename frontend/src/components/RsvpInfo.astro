@@ -1,4 +1,5 @@
 ---
+import { SITE_CONFIG } from '../config';
 ---
 
 <section class="section rsvp-info" id="rsvp">
@@ -21,7 +22,7 @@
         По этой ссылке вы сможете подтвердить своё присутствие и указать дополнительную информацию.
       </p>
       <p class="rsvp-info__deadline">
-        Пожалуйста, ответьте до <strong>20 августа 2026</strong>
+        Пожалуйста, ответьте до <strong>{SITE_CONFIG.rsvpDeadline}</strong>
       </p>
     </div>
   </div>
