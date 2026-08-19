@@ -1,8 +1,8 @@
 export const SITE_CONFIG = {
   coupleName: "Амина и Асылжан",
   weddingDate: "2026-09-05T15:00:00+05:00",
-  rsvpDeadline: "15 августа 2026",
-  rsvpDeadlineISO: "2026-08-15",
+  rsvpDeadline: "23 августа 2026",
+  rsvpDeadlineISO: "2026-08-23",
   venue: {
     name: 'Дворец торжеств "Мирас"',
     hall: "Сиреневый зал",
@@ -18,7 +18,5 @@ export const SITE_CONFIG = {
     whatsapp: "+77051116174",
   },
   apiBaseUrl:
-    typeof window !== "undefined"
-      ? import.meta.env.PUBLIC_API_URL || ""
-      : "",
+    typeof window !== "undefined" ? import.meta.env.PUBLIC_API_URL || "" : "",
 } as const;
